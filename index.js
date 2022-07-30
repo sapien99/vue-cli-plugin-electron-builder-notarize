@@ -100,12 +100,14 @@ module.exports = async params => {
 	const {packageJson} = readPkgUp.sync();
 	const buildConfig = packageJson.build;
 	let appId = '';
-
-	if (buildConfig) {
+	
+	if (buildConfig && buildConfig.appId) {
 		// appId from ./package.json
+		console.log(`Found appId ${appId} in buildConfig from package.json`);
 		appId = buildConfig.appId;
 	} else {
 		try {
+			console.log(`Getting appId from builder-effective-config`);
 			// fallback for vue-cli-plugin-electron-builder
 			// it uses vue.config.js to create electron builder config yaml file
 			// https://github.com/nklayman/vue-cli-plugin-electron-builder
@@ -115,9 +117,19 @@ module.exports = async params => {
 				let data = yaml.safeLoad(fileContents);
 				appId = data.appId;
 			}
+			console.log(`Found appid ${appId} in builder-effective-config`);
 		} catch(err) {
 			console.error(err)
 		}
+	}
+	if (!appId) {
+	  console.log(`Getting appId from environment variable APP_ID`);
+	  appId = process.env.APP_ID;
+	}
+	if (!appId) {
+	  throw new Error(
+	    'appId is mandatory and needs to be set.'
+	  );
 	}
 
 	const appPath = path.join(params.appOutDir, `${params.packager.appInfo.productFilename}.app`);
