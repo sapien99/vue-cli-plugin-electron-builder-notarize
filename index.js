@@ -19,7 +19,8 @@ const getAuthInfo = () => {
 		APPLE_ID_PASSWORD: appleIdPassword,
 		API_KEY_ID: appleApiKey,
 		API_KEY_ISSUER_ID: appleApiIssuer,
-		TEAM_SHORT_NAME: teamShortName
+		TEAM_SHORT_NAME: teamShortName,
+		TEAM_ID: teamId
 	} = process.env;
 
 	if (!appleId && !appleIdPassword && !appleApiKey && !appleApiIssuer) {
@@ -52,7 +53,8 @@ const getAuthInfo = () => {
 		appleIdPassword,
 		appleApiKey,
 		appleApiIssuer,
-		teamShortName
+		teamShortName,
+		teamId
 	};
 };
 
