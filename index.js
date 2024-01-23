@@ -140,6 +140,7 @@ module.exports = async params => {
 	if (authInfo.appleId) {
 		notarizeOptions.appleId = authInfo.appleId;
 		notarizeOptions.appleIdPassword = authInfo.appleIdPassword;
+		notarizeOptions.teamId = authInfo.teamId;
 	} else {
 		notarizeOptions.appleApiKey = authInfo.appleApiKey;
 		notarizeOptions.appleApiIssuer = authInfo.appleApiIssuer;
